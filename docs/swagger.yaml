@@ -1,0 +1,492 @@
+basePath: /api/v1
+definitions:
+  admin.ChangeUserPasswordRequest:
+    properties:
+      new_password:
+        maxLength: 20
+        minLength: 8
+        type: string
+      user_id:
+        type: string
+    required:
+    - new_password
+    - user_id
+    type: object
+  admin.GetUserListResponse:
+    properties:
+      total:
+        type: integer
+      user_list:
+        items:
+          $ref: '#/definitions/admin.GetUserResponse'
+        type: array
+    type: object
+  admin.GetUserResponse:
+    properties:
+      created_at:
+        type: string
+      email:
+        type: string
+      last_login:
+        type: string
+      organization:
+        type: string
+      role:
+        type: string
+      updated_at:
+        type: string
+      user_id:
+        type: string
+      username:
+        type: string
+    type: object
+  admin.UpdateNoticeRequest:
+    properties:
+      content:
+        maxLength: 10000
+        minLength: 1
+        type: string
+      notice_id:
+        type: string
+      notice_type:
+        type: string
+      title:
+        maxLength: 100
+        minLength: 1
+        type: string
+    required:
+    - notice_id
+    type: object
+  admin.UpdateUserRequest:
+    properties:
+      email:
+        type: string
+      organization:
+        maxLength: 100
+        type: string
+      user_id:
+        type: string
+      username:
+        maxLength: 20
+        minLength: 3
+        type: string
+    required:
+    - user_id
+    type: object
+  vo.Response:
+    properties:
+      code:
+        type: integer
+      data: {}
+      message:
+        type: string
+    type: object
+host: localhost:3000
+info:
+  contact:
+    email: 6goddddddd@gmail.com | shenbochennnn@gmail.com
+    name: 6GODD (BoChen SHEN)
+  description: This is the API documentation for the Fiber Admin Server.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0
+  title: Fiber Admin Server API Documentation
+  version: "1.0"
+paths:
+  /admin/notice:
+    put:
+      consumes:
+      - application/json
+      description: Update the notice.
+      operationId: admin-update-notice
+      parameters:
+      - description: Update notice request
+        in: body
+        name: admin.UpdateNoticeRequest
+        required: true
+        schema:
+          $ref: '#/definitions/admin.UpdateNoticeRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  type: object
+              type: object
+        "400":
+          description: Invalid request
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  type: object
+              type: object
+        "401":
+          description: Unauthorized
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  type: object
+              type: object
+        "403":
+          description: Forbidden
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  type: object
+              type: object
+        "500":
+          description: Internal server error
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  type: object
+              type: object
+      security:
+      - Bearer: []
+      summary: update notice
+      tags:
+      - Admin API
+  /admin/user:
+    delete:
+      consumes:
+      - application/json
+      description: Delete the user by ID.
+      operationId: admin-delete-user
+      parameters:
+      - in: query
+        name: userID
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  type: object
+              type: object
+        "400":
+          description: Invalid request
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  type: object
+              type: object
+        "401":
+          description: Unauthorized
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  type: object
+              type: object
+        "403":
+          description: Forbidden
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  type: object
+              type: object
+        "500":
+          description: Internal server error
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  type: object
+              type: object
+      security:
+      - Bearer: []
+      summary: delete user by ID
+      tags:
+      - Admin API
+    put:
+      consumes:
+      - application/json
+      description: Update the user.
+      operationId: admin-update-user
+      parameters:
+      - description: Update user request
+        in: body
+        name: admin.UpdateUserRequest
+        required: true
+        schema:
+          $ref: '#/definitions/admin.UpdateUserRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  type: object
+              type: object
+        "400":
+          description: Invalid request
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  type: object
+              type: object
+        "401":
+          description: Unauthorized
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  type: object
+              type: object
+        "403":
+          description: Forbidden
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  type: object
+              type: object
+        "500":
+          description: Internal server error
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  type: object
+              type: object
+      security:
+      - Bearer: []
+      summary: update user
+      tags:
+      - Admin API
+  /admin/user/list:
+    get:
+      consumes:
+      - application/json
+      description: Get the list of users based on the query parameters.
+      operationId: admin-get-user-list
+      parameters:
+      - in: query
+        name: createEndTime
+        type: string
+      - in: query
+        name: createStartTime
+        type: string
+      - in: query
+        name: desc
+        required: true
+        type: boolean
+      - in: query
+        name: lastLoginEndTime
+        type: string
+      - in: query
+        name: lastLoginStartTime
+        type: string
+      - in: query
+        minimum: 1
+        name: page
+        required: true
+        type: integer
+      - in: query
+        maximum: 100
+        minimum: 1
+        name: pageSize
+        required: true
+        type: integer
+      - in: query
+        maxLength: 100
+        name: query
+        type: string
+      - in: query
+        name: role
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/admin.GetUserListResponse'
+              type: object
+        "400":
+          description: Invalid request
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  type: object
+              type: object
+        "401":
+          description: Unauthorized
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  type: object
+              type: object
+        "403":
+          description: Forbidden
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  type: object
+              type: object
+        "500":
+          description: Internal server error
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  type: object
+              type: object
+      security:
+      - Bearer: []
+      summary: get user list
+      tags:
+      - Admin API
+  /admin/user/password:
+    put:
+      consumes:
+      - application/json
+      description: Change the user's password.
+      operationId: admin-change-user-password
+      parameters:
+      - description: Change user password request
+        in: body
+        name: admin.ChangeUserPasswordRequest
+        required: true
+        schema:
+          $ref: '#/definitions/admin.ChangeUserPasswordRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  type: object
+              type: object
+        "400":
+          description: Invalid request
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  type: object
+              type: object
+        "401":
+          description: Unauthorized
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  type: object
+              type: object
+        "403":
+          description: Forbidden
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  type: object
+              type: object
+        "500":
+          description: Internal server error
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  type: object
+              type: object
+      security:
+      - Bearer: []
+      summary: change user password
+      tags:
+      - Admin API
+  /logout:
+    get:
+      consumes:
+      - application/json
+      description: Log out the user.
+      operationId: common-logout
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  type: object
+              type: object
+        "401":
+          description: Unauthorized
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  type: object
+              type: object
+        "500":
+          description: Internal server error
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  type: object
+              type: object
+      security:
+      - Bearer: []
+      summary: logout
+      tags:
+      - Auth API
+swagger: "2.0"

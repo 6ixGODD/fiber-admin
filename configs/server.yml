@@ -1,0 +1,107 @@
+base:
+  app_name: "fiber-admin"
+  app_port: "8000"
+  app_host: "localhost"
+  app_version: "1.0.0"
+  enable_tls: false
+  cert_file: ""
+  key_file: ""
+  enable_cors: true
+  enable_prometheus: true
+
+casbin:
+  casbin_model_path: "./configs/casbin_model.conf"
+  casbin_policy_adapter_url: "mongodb://localhost:27017/fiber-admin"
+
+fiber:
+  prefork: false
+  server_header: ""
+  body_limit: 4194304
+  concurrency: 262144
+  read_timeout: 10s
+  write_timeout: 10s
+  idle_timeout: 120s
+  read_buffer_size: 4096
+  write_buffer_size: 4096
+  proxy_header: "X-Forwarded-For"
+  disable_keepalive: false
+  disable_startup_message: false
+  reduce_memory_usage: false
+  enable_trusted_proxy_check: false
+  trusted_proxies: [ ]
+  enable_print_routes: true
+
+jwt:
+  jwt_token_duration: "3600s"
+  jwt_refresh_duration: "7200s"
+  jwt_refresh_buffer: "300s"
+
+mongo:
+  mongo_uri: "mongodb://localhost:27017"
+  mongo_database: "fiber-admin"
+  mongo_connect_timeout_ms: 10000
+  mongo_max_pool_size: 10
+  mongo_min_pool_size: 1
+  mongo_socket_timeout_ms: 10000
+  mongo_ping_timeout_s: 5
+
+prometheus:
+  prometheus_namespace: "data_collection_hub"
+  prometheus_subsystem: ""
+  prometheus_metric_path: "/metrics"
+
+middleware:
+  limiter:
+    limiter_max: 100
+    limiter_expiration: 10s
+  cors:
+    allow_origins: "*"
+    allow_methods: "GET,POST,PUT,DELETE,PATCH,OPTIONS"
+    allow_headers: ""
+    allow_credentials: false
+    expose_headers: ""
+    max_age: 0
+
+cache:
+  default_ttl: 5m
+  user_cache_ttl: 10m
+  notice_cache_ttl: 10m
+  documentation_cache_ttl: 10m
+  token_blacklist_ttl: 1h
+  redis:
+    redis_addr: "localhost:6379"
+    redis_client_name: ""
+    redis_username: ""
+    redis_password: "root"
+    redis_db: 0
+    redis_max_retries: 5
+    redis_min_retry_backoff: 8ms
+    redis_max_retry_backoff: 512ms
+    redis_dial_timeout: 5s
+    redis_read_timeout: 3s
+    redis_write_timeout: 3s
+    redis_pool_size: 10
+    redis_pool_timeout: 4s
+    redis_min_idle_conns: 0
+    redis_max_idle_conns: 0
+    redis_max_active_conns: 0
+    redis_conn_max_idle_time: 30m
+    redis_conn_max_lifetime: -1
+
+tasks:
+  sync_logs_spec: "@hourly"
+  update_key_spec: "@weekly"
+
+zap:
+  zap_level: "info"
+  zap_encoding: "console"
+  zap_development: true
+  zap_output_paths: [ "stdout" ]
+  zap_error_output_paths: [ "stderr" ]
+  zap_caller_skip: 1
+  zap_disable_caller: true
+  zap_disable_stacktrace: true
+
+idempotency:
+  idempotency_header_key: "Idempotency-Key"
+  idempotency_expiry: "5m"
