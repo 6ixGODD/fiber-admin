@@ -11,6 +11,8 @@ type ProfileApi struct {
 	ProfileService commonservice.ProfileService
 }
 
+// GetProfile returns the profile.
+//
 //	@description	Get the profile.
 //	@id				common-get-profile
 //	@summary		get profile
@@ -23,8 +25,6 @@ type ProfileApi struct {
 //	@failure		401			{object}	vo.Response{data=nil}						"Unauthorized"
 //	@failure		500			{object}	vo.Response{data=nil}						"Internal server error"
 //	@router			/profile	[get]
-
-// GetProfile returns the profile.
 func (api *ProfileApi) GetProfile(c *fiber.Ctx) error {
 	resp, err := api.ProfileService.GetProfile(c.UserContext())
 	if err != nil {

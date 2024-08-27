@@ -19,6 +19,8 @@ type DocumentationApi struct {
 	Validator            *validator.Validate
 }
 
+// GetDocumentation returns the documentation by ID.
+//
 //	@description	Get the documentation by ID.
 //	@id				common-get-documentation
 //	@summary		get documentation by ID
@@ -33,8 +35,6 @@ type DocumentationApi struct {
 //	@failure		404				{object}	vo.Response{data=nil}								"Documentation not found"
 //	@failure		500				{object}	vo.Response{data=nil}								"Internal server error"
 //	@router			/documentation	[get]
-
-// GetDocumentation returns the documentation by ID.
 func (d DocumentationApi) GetDocumentation(c *fiber.Ctx) error {
 	req := new(common.GetDocumentationRequest)
 
@@ -62,6 +62,8 @@ func (d DocumentationApi) GetDocumentation(c *fiber.Ctx) error {
 	)
 }
 
+// GetDocumentationList returns a list of documentation.
+//
 //	@description	Get a list of documentation.
 //	@id				common-get-documentation-list
 //	@summary		get documentation list
@@ -75,8 +77,6 @@ func (d DocumentationApi) GetDocumentation(c *fiber.Ctx) error {
 //	@failure		401					{object}	vo.Response{data=nil}									"Unauthorized"
 //	@failure		500					{object}	vo.Response{data=nil}									"Internal server error"
 //	@router			/documentation/list	[get]
-
-// GetDocumentationList returns a list of documentation.
 func (d DocumentationApi) GetDocumentationList(c *fiber.Ctx) error {
 	req := new(common.GetDocumentationListRequest)
 

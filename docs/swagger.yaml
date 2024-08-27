@@ -12,6 +12,68 @@ definitions:
     - new_password
     - user_id
     type: object
+  admin.GetLoginLogListResponse:
+    properties:
+      login_log_list:
+        items:
+          $ref: '#/definitions/admin.GetLoginLogResponse'
+        type: array
+      total:
+        type: integer
+    type: object
+  admin.GetLoginLogResponse:
+    properties:
+      created_at:
+        type: string
+      email:
+        type: string
+      ip_address:
+        type: string
+      login_log_id:
+        type: string
+      user_agent:
+        type: string
+      user_id:
+        type: string
+      username:
+        type: string
+    type: object
+  admin.GetOperationLogListResponse:
+    properties:
+      operation_log_list:
+        items:
+          $ref: '#/definitions/admin.GetOperationLogResponse'
+        type: array
+      total:
+        type: integer
+    type: object
+  admin.GetOperationLogResponse:
+    properties:
+      created_at:
+        type: string
+      description:
+        type: string
+      email:
+        type: string
+      entity_id:
+        type: string
+      entity_type:
+        type: string
+      ip_address:
+        type: string
+      operation:
+        type: string
+      operation_log_id:
+        type: string
+      status:
+        type: string
+      user_agent:
+        type: string
+      user_id:
+        type: string
+      username:
+        type: string
+    type: object
   admin.GetUserListResponse:
     properties:
       total:
@@ -39,6 +101,74 @@ definitions:
         type: string
       username:
         type: string
+    type: object
+  admin.InsertDocumentationRequest:
+    properties:
+      content:
+        maxLength: 10000
+        minLength: 1
+        type: string
+      title:
+        maxLength: 100
+        minLength: 1
+        type: string
+    required:
+    - content
+    - title
+    type: object
+  admin.InsertNoticeRequest:
+    properties:
+      content:
+        maxLength: 10000
+        minLength: 1
+        type: string
+      notice_type:
+        type: string
+      title:
+        maxLength: 100
+        minLength: 1
+        type: string
+    required:
+    - content
+    - notice_type
+    - title
+    type: object
+  admin.InsertUserRequest:
+    properties:
+      email:
+        maxLength: 100
+        type: string
+      organization:
+        maxLength: 100
+        type: string
+      password:
+        maxLength: 20
+        minLength: 8
+        type: string
+      username:
+        maxLength: 20
+        minLength: 3
+        type: string
+    required:
+    - email
+    - organization
+    - password
+    - username
+    type: object
+  admin.UpdateDocumentationRequest:
+    properties:
+      content:
+        maxLength: 10000
+        minLength: 1
+        type: string
+      documentation_id:
+        type: string
+      title:
+        maxLength: 100
+        minLength: 1
+        type: string
+    required:
+    - documentation_id
     type: object
   admin.UpdateNoticeRequest:
     properties:
@@ -73,6 +203,156 @@ definitions:
     required:
     - user_id
     type: object
+  common.ChangePasswordRequest:
+    properties:
+      new_password:
+        maxLength: 20
+        minLength: 8
+        type: string
+      old_password:
+        type: string
+    required:
+    - new_password
+    - old_password
+    type: object
+  common.DocumentationSummary:
+    properties:
+      created_at:
+        type: string
+      document_id:
+        type: string
+      title:
+        type: string
+    type: object
+  common.GetDocumentationListResponse:
+    properties:
+      documentation_summary_list:
+        items:
+          $ref: '#/definitions/common.DocumentationSummary'
+        type: array
+      total:
+        type: integer
+    type: object
+  common.GetDocumentationResponse:
+    properties:
+      content:
+        type: string
+      created_at:
+        type: string
+      document_id:
+        type: string
+      title:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  common.GetNoticeListResponse:
+    properties:
+      notice_summary_list:
+        items:
+          $ref: '#/definitions/common.NoticeSummary'
+        type: array
+      total:
+        type: integer
+    type: object
+  common.GetNoticeResponse:
+    properties:
+      content:
+        type: string
+      created_at:
+        type: string
+      notice_id:
+        type: string
+      title:
+        type: string
+      type:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  common.GetProfileResponse:
+    properties:
+      email:
+        type: string
+      last_login:
+        type: string
+      organization:
+        type: string
+      role:
+        type: string
+      user_id:
+        type: string
+      username:
+        type: string
+    type: object
+  common.LoginRequest:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    required:
+    - email
+    - password
+    type: object
+  common.LoginResponse:
+    properties:
+      access_token:
+        type: string
+      expires_in:
+        type: number
+      meta:
+        properties:
+          email:
+            type: string
+          role:
+            type: string
+          user_id:
+            type: string
+          username:
+            type: string
+        type: object
+      refresh_token:
+        type: string
+    type: object
+  common.NoticeSummary:
+    properties:
+      created_at:
+        type: string
+      notice_id:
+        type: string
+      title:
+        type: string
+      type:
+        type: string
+    type: object
+  common.RefreshTokenRequest:
+    properties:
+      refresh_token:
+        type: string
+    required:
+    - refresh_token
+    type: object
+  common.RefreshTokenResponse:
+    properties:
+      access_token:
+        type: string
+      expires_in:
+        type: number
+      meta:
+        properties:
+          email:
+            type: string
+          role:
+            type: string
+          user_id:
+            type: string
+          username:
+            type: string
+        type: object
+      refresh_token:
+        type: string
+    type: object
   vo.Response:
     properties:
       code:
@@ -93,7 +373,369 @@ info:
   title: Fiber Admin Server API Documentation
   version: "1.0"
 paths:
+  /admin/documentation:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a documentation.
+      operationId: admin-delete-documentation
+      parameters:
+      - in: query
+        name: documentationID
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  type: object
+              type: object
+        "400":
+          description: Invalid request
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  type: object
+              type: object
+        "401":
+          description: Unauthorized
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  type: object
+              type: object
+        "403":
+          description: Forbidden
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  type: object
+              type: object
+        "404":
+          description: Not found
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  type: object
+              type: object
+        "500":
+          description: Internal server error
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  type: object
+              type: object
+      security:
+      - Bearer: []
+      summary: delete documentation
+      tags:
+      - Admin API
+    post:
+      consumes:
+      - application/json
+      description: Insert a new documentation.
+      operationId: admin-insert-documentation
+      parameters:
+      - description: Insert documentation request
+        in: body
+        name: admin.InsertDocumentationRequest
+        required: true
+        schema:
+          $ref: '#/definitions/admin.InsertDocumentationRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  type: object
+              type: object
+        "400":
+          description: Invalid request
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  type: object
+              type: object
+        "401":
+          description: Unauthorized
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  type: object
+              type: object
+        "403":
+          description: Forbidden
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  type: object
+              type: object
+        "500":
+          description: Internal server error
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  type: object
+              type: object
+      security:
+      - Bearer: []
+      summary: insert documentation
+      tags:
+      - Admin API
+    put:
+      consumes:
+      - application/json
+      description: Update a documentation.
+      operationId: admin-update-documentation
+      parameters:
+      - description: Update documentation request
+        in: body
+        name: admin.UpdateDocumentationRequest
+        required: true
+        schema:
+          $ref: '#/definitions/admin.UpdateDocumentationRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  type: object
+              type: object
+        "400":
+          description: Invalid request
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  type: object
+              type: object
+        "401":
+          description: Unauthorized
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  type: object
+              type: object
+        "403":
+          description: Forbidden
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  type: object
+              type: object
+        "404":
+          description: Not found
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  type: object
+              type: object
+        "500":
+          description: Internal server error
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  type: object
+              type: object
+      security:
+      - Bearer: []
+      summary: update documentation
+      tags:
+      - Admin API
+  /admin/login-log/list:
+    get:
+      consumes:
+      - application/json
+      description: Get the login log list.
+      operationId: admin-get-login-log-list
+      parameters:
+      - in: query
+        name: createEndTime
+        type: string
+      - in: query
+        name: createStartTime
+        type: string
+      - in: query
+        name: desc
+        required: true
+        type: boolean
+      - in: query
+        minimum: 1
+        name: page
+        required: true
+        type: integer
+      - in: query
+        maximum: 100
+        minimum: 1
+        name: pageSize
+        required: true
+        type: integer
+      - in: query
+        maxLength: 100
+        name: query
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/admin.GetLoginLogListResponse'
+              type: object
+        "400":
+          description: Invalid request
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  type: object
+              type: object
+        "401":
+          description: Unauthorized
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  type: object
+              type: object
+        "403":
+          description: Forbidden
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  type: object
+              type: object
+        "500":
+          description: Internal server error
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  type: object
+              type: object
+      security:
+      - Bearer: []
+      summary: get login log list
+      tags:
+      - Admin API
   /admin/notice:
+    post:
+      consumes:
+      - application/json
+      description: Insert a new notice.
+      operationId: admin-insert-notice
+      parameters:
+      - description: Insert notice request
+        in: body
+        name: admin.InsertNoticeRequest
+        required: true
+        schema:
+          $ref: '#/definitions/admin.InsertNoticeRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  type: object
+              type: object
+        "400":
+          description: Invalid request
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  type: object
+              type: object
+        "401":
+          description: Unauthorized
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  type: object
+              type: object
+        "403":
+          description: Forbidden
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  type: object
+              type: object
+        "500":
+          description: Internal server error
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  type: object
+              type: object
+      security:
+      - Bearer: []
+      summary: insert notice
+      tags:
+      - Admin API
     put:
       consumes:
       - application/json
@@ -159,6 +801,100 @@ paths:
       summary: update notice
       tags:
       - Admin API
+  /admin/operation-log/list:
+    get:
+      consumes:
+      - application/json
+      description: Get the operation log list.
+      operationId: admin-get-operation-log-list
+      parameters:
+      - in: query
+        name: createEndTime
+        type: string
+      - in: query
+        name: createStartTime
+        type: string
+      - in: query
+        name: desc
+        required: true
+        type: boolean
+      - in: query
+        name: entityType
+        type: string
+      - in: query
+        name: operation
+        type: string
+      - in: query
+        minimum: 1
+        name: page
+        required: true
+        type: integer
+      - in: query
+        maximum: 100
+        minimum: 1
+        name: pageSize
+        required: true
+        type: integer
+      - in: query
+        maxLength: 100
+        name: query
+        type: string
+      - in: query
+        name: status
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/admin.GetOperationLogListResponse'
+              type: object
+        "400":
+          description: Invalid request
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  type: object
+              type: object
+        "401":
+          description: Unauthorized
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  type: object
+              type: object
+        "403":
+          description: Forbidden
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  type: object
+              type: object
+        "500":
+          description: Internal server error
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  type: object
+              type: object
+      security:
+      - Bearer: []
+      summary: get operation log list
+      tags:
+      - Admin API
   /admin/user:
     delete:
       consumes:
@@ -221,6 +957,143 @@ paths:
       security:
       - Bearer: []
       summary: delete user by ID
+      tags:
+      - Admin API
+    get:
+      consumes:
+      - application/json
+      description: Get the user by ID.
+      operationId: admin-get-user
+      parameters:
+      - in: query
+        name: userID
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/admin.GetUserResponse'
+              type: object
+        "400":
+          description: Invalid request
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  type: object
+              type: object
+        "401":
+          description: Unauthorized
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  type: object
+              type: object
+        "403":
+          description: Forbidden
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  type: object
+              type: object
+        "404":
+          description: User not found
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  type: object
+              type: object
+        "500":
+          description: Internal server error
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  type: object
+              type: object
+      security:
+      - Bearer: []
+      summary: get user by ID
+      tags:
+      - Admin API
+    post:
+      consumes:
+      - application/json
+      description: Insert a new user.
+      operationId: admin-insert-user
+      parameters:
+      - description: Insert user request
+        in: body
+        name: admin.InsertUserRequest
+        required: true
+        schema:
+          $ref: '#/definitions/admin.InsertUserRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  type: object
+              type: object
+        "400":
+          description: Invalid request
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  type: object
+              type: object
+        "401":
+          description: Unauthorized
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  type: object
+              type: object
+        "403":
+          description: Forbidden
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  type: object
+              type: object
+        "500":
+          description: Internal server error
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  type: object
+              type: object
+      security:
+      - Bearer: []
+      summary: insert user
       tags:
       - Admin API
     put:
@@ -448,6 +1321,300 @@ paths:
       summary: change user password
       tags:
       - Admin API
+  /change-password:
+    post:
+      consumes:
+      - application/json
+      description: Change the user's password.
+      operationId: common-change-password
+      parameters:
+      - description: Change password request
+        in: body
+        name: common.ChangePasswordRequest
+        required: true
+        schema:
+          $ref: '#/definitions/common.ChangePasswordRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  type: object
+              type: object
+        "400":
+          description: Invalid request
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  type: object
+              type: object
+        "401":
+          description: Unauthorized
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  type: object
+              type: object
+        "500":
+          description: Internal server error
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  type: object
+              type: object
+      security:
+      - Bearer: []
+      summary: change password
+      tags:
+      - Auth API
+  /common/idempotency-token:
+    get:
+      consumes:
+      - application/json
+      description: Generate an idempotency token.
+      operationId: common-generate-idempotency-token
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+        "400":
+          description: Invalid request
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  type: object
+              type: object
+        "401":
+          description: Unauthorized
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  type: object
+              type: object
+        "500":
+          description: Internal server error
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  type: object
+              type: object
+      security:
+      - Bearer: []
+      summary: generate idempotency token
+      tags:
+      - Common API
+  /documentation:
+    get:
+      consumes:
+      - application/json
+      description: Get the documentation by ID.
+      operationId: common-get-documentation
+      parameters:
+      - in: query
+        name: documentationID
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/common.GetDocumentationResponse'
+              type: object
+        "400":
+          description: Invalid request
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  type: object
+              type: object
+        "401":
+          description: Unauthorized
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  type: object
+              type: object
+        "404":
+          description: Documentation not found
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  type: object
+              type: object
+        "500":
+          description: Internal server error
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  type: object
+              type: object
+      security:
+      - Bearer: []
+      summary: get documentation by ID
+      tags:
+      - Documentation API
+  /documentation/list:
+    get:
+      consumes:
+      - application/json
+      description: Get a list of documentation.
+      operationId: common-get-documentation-list
+      parameters:
+      - in: query
+        minimum: 1
+        name: page
+        required: true
+        type: integer
+      - in: query
+        maximum: 100
+        minimum: 1
+        name: pageSize
+        required: true
+        type: integer
+      - in: query
+        name: updateEndTime
+        type: string
+      - in: query
+        name: updateStartTime
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/common.GetDocumentationListResponse'
+              type: object
+        "400":
+          description: Invalid request
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  type: object
+              type: object
+        "401":
+          description: Unauthorized
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  type: object
+              type: object
+        "500":
+          description: Internal server error
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  type: object
+              type: object
+      security:
+      - Bearer: []
+      summary: get documentation list
+      tags:
+      - Documentation API
+  /login:
+    post:
+      consumes:
+      - application/json
+      description: Log in the user and return a token.
+      operationId: common-login
+      parameters:
+      - description: Login request
+        in: body
+        name: common.LoginRequest
+        required: true
+        schema:
+          $ref: '#/definitions/common.LoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/common.LoginResponse'
+              type: object
+        "400":
+          description: Invalid request
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  type: object
+              type: object
+        "401":
+          description: Unauthorized
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  type: object
+              type: object
+        "500":
+          description: Internal server error
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  type: object
+              type: object
+      summary: login
+      tags:
+      - Auth API
   /logout:
     get:
       consumes:
@@ -487,6 +1654,248 @@ paths:
       security:
       - Bearer: []
       summary: logout
+      tags:
+      - Auth API
+  /notice:
+    get:
+      consumes:
+      - application/json
+      description: Get the notice by ID.
+      operationId: common-get-notice
+      parameters:
+      - in: query
+        name: noticeID
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/common.GetNoticeResponse'
+              type: object
+        "400":
+          description: Invalid request
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  type: object
+              type: object
+        "401":
+          description: Unauthorized
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  type: object
+              type: object
+        "404":
+          description: Notice not found
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  type: object
+              type: object
+        "500":
+          description: Internal server error
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  type: object
+              type: object
+      security:
+      - Bearer: []
+      summary: get notice by ID
+      tags:
+      - Notice API
+  /notice/list:
+    get:
+      consumes:
+      - application/json
+      description: Get the notice list.
+      operationId: common-get-notice-list
+      parameters:
+      - in: query
+        name: noticeType
+        type: string
+      - in: query
+        minimum: 1
+        name: page
+        required: true
+        type: integer
+      - in: query
+        maximum: 100
+        minimum: 1
+        name: pageSize
+        required: true
+        type: integer
+      - in: query
+        name: updateEndTime
+        type: string
+      - in: query
+        name: updateStartTime
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/common.GetNoticeListResponse'
+              type: object
+        "400":
+          description: Invalid request
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  type: object
+              type: object
+        "401":
+          description: Unauthorized
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  type: object
+              type: object
+        "500":
+          description: Internal server error
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  type: object
+              type: object
+      security:
+      - Bearer: []
+      summary: get notice list
+      tags:
+      - Notice API
+  /profile:
+    get:
+      consumes:
+      - application/json
+      description: Get the profile.
+      operationId: common-get-profile
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/common.GetProfileResponse'
+              type: object
+        "400":
+          description: Invalid request
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  type: object
+              type: object
+        "401":
+          description: Unauthorized
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  type: object
+              type: object
+        "500":
+          description: Internal server error
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  type: object
+              type: object
+      security:
+      - Bearer: []
+      summary: get profile
+      tags:
+      - Common API
+  /refresh-token:
+    post:
+      consumes:
+      - application/json
+      description: Refresh the user's token.
+      operationId: common-refresh-token
+      parameters:
+      - description: Refresh token request
+        in: body
+        name: common.RefreshTokenRequest
+        required: true
+        schema:
+          $ref: '#/definitions/common.RefreshTokenRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/common.RefreshTokenResponse'
+              type: object
+        "400":
+          description: Invalid request
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  type: object
+              type: object
+        "401":
+          description: Unauthorized
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  type: object
+              type: object
+        "500":
+          description: Internal server error
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  type: object
+              type: object
+      security:
+      - Bearer: []
+      summary: refresh token
       tags:
       - Auth API
 swagger: "2.0"

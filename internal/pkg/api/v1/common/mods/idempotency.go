@@ -11,6 +11,8 @@ type IdempotencyApi struct {
 	IdempotencyService commonservice.IdempotencyService
 }
 
+// GenerateIdempotencyToken generates an idempotency token.
+//
 //	@description	Generate an idempotency token.
 //	@id				common-generate-idempotency-token
 //	@summary		generate idempotency token
@@ -23,8 +25,6 @@ type IdempotencyApi struct {
 //	@failure		401							{object}	vo.Response{data=nil}		"Unauthorized"
 //	@failure		500							{object}	vo.Response{data=nil}		"Internal server error"
 //	@router			/common/idempotency-token	[get]
-
-// GenerateIdempotencyToken generates an idempotency token.
 func (i *IdempotencyApi) GenerateIdempotencyToken(c *fiber.Ctx) error {
 	resp, err := i.IdempotencyService.GenerateIdempotencyToken(c.UserContext())
 	if err != nil {

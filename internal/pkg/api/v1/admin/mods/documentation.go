@@ -21,6 +21,8 @@ type DocumentationApi struct {
 	Validator            *validator.Validate
 }
 
+// InsertDocumentation Insert a new documentation.
+//
 //	@description	Insert a new documentation.
 //	@id				admin-insert-documentation
 //	@summary		insert documentation
@@ -35,8 +37,6 @@ type DocumentationApi struct {
 //	@failure		403						{object}	vo.Response{data=nil}	"Forbidden"
 //	@failure		500						{object}	vo.Response{data=nil}	"Internal server error"
 //	@router			/admin/documentation	[post]
-
-// InsertDocumentation Insert a new documentation.
 func (d DocumentationApi) InsertDocumentation(c *fiber.Ctx) error {
 	ctx := c.UserContext()
 	req := new(admin.InsertDocumentationRequest)
@@ -87,6 +87,8 @@ func (d DocumentationApi) InsertDocumentation(c *fiber.Ctx) error {
 	)
 }
 
+// UpdateDocumentation Update a documentation.
+//
 //	@description	Update a documentation.
 //	@id				admin-update-documentation
 //	@summary		update documentation
@@ -102,8 +104,6 @@ func (d DocumentationApi) InsertDocumentation(c *fiber.Ctx) error {
 //	@failure		404						{object}	vo.Response{data=nil}	"Not found"
 //	@failure		500						{object}	vo.Response{data=nil}	"Internal server error"
 //	@router			/admin/documentation	[put]
-
-// UpdateDocumentation Update a documentation.
 func (d DocumentationApi) UpdateDocumentation(c *fiber.Ctx) error {
 	ctx := c.UserContext()
 	req := new(admin.UpdateDocumentationRequest)
@@ -155,6 +155,8 @@ func (d DocumentationApi) UpdateDocumentation(c *fiber.Ctx) error {
 	)
 }
 
+// DeleteDocumentation Delete a documentation.
+//
 //	@description	Delete a documentation.
 //	@id				admin-delete-documentation
 //	@summary		delete documentation
@@ -170,8 +172,6 @@ func (d DocumentationApi) UpdateDocumentation(c *fiber.Ctx) error {
 //	@failure		404						{object}	vo.Response{data=nil}	"Not found"
 //	@failure		500						{object}	vo.Response{data=nil}	"Internal server error"
 //	@router			/admin/documentation	[delete]
-
-// DeleteDocumentation Delete a documentation.
 func (d DocumentationApi) DeleteDocumentation(c *fiber.Ctx) error {
 	ctx := c.UserContext()
 	req := new(admin.DeleteDocumentationRequest)

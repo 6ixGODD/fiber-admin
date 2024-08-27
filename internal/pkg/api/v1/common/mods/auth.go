@@ -21,6 +21,8 @@ type AuthApi struct {
 	Validator   *validator.Validate
 }
 
+// Login logs in the user and returns a token.
+//
 //	@description	Log in the user and return a token.
 //	@id				common-login
 //	@summary		login
@@ -33,8 +35,6 @@ type AuthApi struct {
 //	@failure		401					{object}	vo.Response{data=nil}					"Unauthorized"
 //	@failure		500					{object}	vo.Response{data=nil}					"Internal server error"
 //	@router			/login				            [post]
-
-// Login logs in the user and returns a token.
 func (a *AuthApi) Login(c *fiber.Ctx) error {
 	ctx := c.UserContext()
 	req := new(common.LoginRequest)
@@ -100,6 +100,8 @@ func (a *AuthApi) Logout(c *fiber.Ctx) error {
 	)
 }
 
+// RefreshToken refreshes the user's token.
+//
 //	@description	Refresh the user's token.
 //	@id				common-refresh-token
 //	@summary		refresh token
@@ -113,8 +115,6 @@ func (a *AuthApi) Logout(c *fiber.Ctx) error {
 //	@failure		401				{object}	vo.Response{data=nil}							"Unauthorized"
 //	@failure		500				{object}	vo.Response{data=nil}							"Internal server error"
 //	@router			/refresh-token	[post]
-
-// RefreshToken refreshes the user's token.
 func (a *AuthApi) RefreshToken(c *fiber.Ctx) error {
 	req := new(common.RefreshTokenRequest)
 
@@ -139,6 +139,8 @@ func (a *AuthApi) RefreshToken(c *fiber.Ctx) error {
 	)
 }
 
+// ChangePassword changes the user's password.
+//
 //	@description	Change the user's password.
 //	@id				common-change-password
 //	@summary		change password
@@ -152,8 +154,6 @@ func (a *AuthApi) RefreshToken(c *fiber.Ctx) error {
 //	@failure		401					{object}	vo.Response{data=nil}	"Unauthorized"
 //	@failure		500					{object}	vo.Response{data=nil}	"Internal server error"
 //	@router			/change-password	[post]
-
-// ChangePassword changes the user's password.
 func (a *AuthApi) ChangePassword(c *fiber.Ctx) error {
 	req := new(common.ChangePasswordRequest)
 

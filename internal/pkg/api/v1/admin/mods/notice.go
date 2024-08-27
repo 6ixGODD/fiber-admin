@@ -21,6 +21,8 @@ type NoticeApi struct {
 	Validator     *validator.Validate
 }
 
+// InsertNotice inserts a new notice.
+//
 //	@description	Insert a new notice.
 //	@id				admin-insert-notice
 //	@summary		insert notice
@@ -35,8 +37,6 @@ type NoticeApi struct {
 //	@failure		403				{object}	vo.Response{data=nil}	"Forbidden"
 //	@failure		500				{object}	vo.Response{data=nil}	"Internal server error"
 //	@router			/admin/notice	[post]
-
-// InsertNotice inserts a new notice.
 func (n *NoticeApi) InsertNotice(c *fiber.Ctx) error {
 	ctx := c.UserContext()
 	req := new(admin.InsertNoticeRequest)

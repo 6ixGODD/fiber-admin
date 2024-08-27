@@ -19,10 +19,12 @@ type NoticeApi struct {
 	Validator     *validator.Validate
 }
 
+// GetNotice returns the notice by ID.
+//
 //	@description	Get the notice by ID.
 //	@id				common-get-notice
 //	@summary		get notice by ID
-//	@tags			Common API
+//	@tags			Notice API
 //	@accept			json
 //	@produce		json
 //	@param			common.GetNoticeRequest	query	common.GetNoticeRequest	true	"Get notice request"
@@ -33,8 +35,6 @@ type NoticeApi struct {
 //	@failure		404		{object}	vo.Response{data=nil}						"Notice not found"
 //	@failure		500		{object}	vo.Response{data=nil}						"Internal server error"
 //	@router			/notice	[get]
-
-// GetNotice returns the notice by ID.
 func (n *NoticeApi) GetNotice(c *fiber.Ctx) error {
 	req := new(common.GetNoticeRequest)
 
@@ -62,10 +62,12 @@ func (n *NoticeApi) GetNotice(c *fiber.Ctx) error {
 	)
 }
 
+// GetNoticeList returns the notice list.
+//
 //	@description	Get the notice list.
 //	@id				common-get-notice-list
 //	@summary		get notice list
-//	@tags			Common API
+//	@tags			Notice API
 //	@accept			json
 //	@produce		json
 //	@param			common.GetNoticeListRequest	query	common.GetNoticeListRequest	true	"Get notice list request"
@@ -75,8 +77,6 @@ func (n *NoticeApi) GetNotice(c *fiber.Ctx) error {
 //	@failure		401				{object}	vo.Response{data=nil}							"Unauthorized"
 //	@failure		500				{object}	vo.Response{data=nil}							"Internal server error"
 //	@router			/notice/list	[get]
-
-// GetNoticeList returns the notice list.
 func (n *NoticeApi) GetNoticeList(c *fiber.Ctx) error {
 	req := new(common.GetNoticeListRequest)
 

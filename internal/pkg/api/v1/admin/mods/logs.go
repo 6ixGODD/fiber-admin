@@ -18,6 +18,8 @@ type LogsApi struct {
 	Validator   *validator.Validate
 }
 
+// GetLoginLogList returns the login log list.
+//
 //	@description	Get the login log list.
 //	@id				admin-get-login-log-list
 //	@summary		get login log list
@@ -32,8 +34,6 @@ type LogsApi struct {
 //	@failure		403						{object}	vo.Response{data=nil}							"Forbidden"
 //	@failure		500						{object}	vo.Response{data=nil}							"Internal server error"
 //	@router			/admin/login-log/list	[get]
-
-// GetLoginLogList returns the login log list.
 func (l *LogsApi) GetLoginLogList(c *fiber.Ctx) error {
 	req := new(admin.GetLoginLogListRequest)
 
@@ -86,6 +86,8 @@ func (l *LogsApi) GetLoginLogList(c *fiber.Ctx) error {
 	)
 }
 
+// GetOperationLogList returns the operation log list.
+//
 //	@description	Get the operation log list.
 //	@id				admin-get-operation-log-list
 //	@summary		get operation log list
@@ -100,8 +102,6 @@ func (l *LogsApi) GetLoginLogList(c *fiber.Ctx) error {
 //	@failure		403							{object}	vo.Response{data=nil}								"Forbidden"
 //	@failure		500							{object}	vo.Response{data=nil}								"Internal server error"
 //	@router			/admin/operation-log/list	[get]
-
-// GetOperationLogList returns the operation log list.
 func (l *LogsApi) GetOperationLogList(c *fiber.Ctx) error {
 	req := new(admin.GetOperationLogListRequest)
 

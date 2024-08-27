@@ -22,6 +22,8 @@ type UserApi struct {
 	Validator   *validator.Validate
 }
 
+// InsertUser inserts a new user.
+//
 //	@description	Insert a new user.
 //	@id				admin-insert-user
 //	@summary		insert user
@@ -36,8 +38,6 @@ type UserApi struct {
 //	@failure		403			{object}	vo.Response{data=nil}	"Forbidden"
 //	@failure		500			{object}	vo.Response{data=nil}	"Internal server error"
 //	@router			/admin/user	[post]
-
-// InsertUser inserts a new user.
 func (u *UserApi) InsertUser(c *fiber.Ctx) error {
 	ctx := c.UserContext()
 	req := new(admin.InsertUserRequest)
@@ -87,6 +87,8 @@ func (u *UserApi) InsertUser(c *fiber.Ctx) error {
 	)
 }
 
+// GetUser returns the user by ID.
+//
 //	@description	Get the user by ID.
 //	@id				admin-get-user
 //	@summary		get user by ID
@@ -102,8 +104,6 @@ func (u *UserApi) InsertUser(c *fiber.Ctx) error {
 //	@failure		404			{object}	vo.Response{data=nil}					"User not found"
 //	@failure		500			{object}	vo.Response{data=nil}					"Internal server error"
 //	@router			/admin/user	[get]
-
-// GetUser returns the user by ID.
 func (u *UserApi) GetUser(c *fiber.Ctx) error {
 	req := new(admin.GetUserRequest)
 
