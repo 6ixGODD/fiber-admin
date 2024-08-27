@@ -44,17 +44,16 @@ a set of common features such as user management, role management, documentation
 
 * **Fiber:** Provides a high-performance, minimalist web framework for building RESTful APIs.
 * **MongoDB:** Used as the primary database for storing and retrieving data.
-* **Redis:** Provides caching capabilities to improve performance.
+* **Redis:** Provides caching capabilities.
 * **Casbin:** Role-Based Access Control (RBAC) for managing user permissions, provides a flexible access control model.
 * **Zap:** A fast, structured logging library for detailed and efficient logging.
 * **Viper:** Used for configuration management, allowing easy configuration handling.
-* **Wire:** Dependency injection framework that simplifies the initialization of complex objects.
+* **Wire:** Dependency injection framework.
 * **Swagger:** Integrated for API documentation, allowing automatic generation of API docs.
 * **Cron:** Scheduling library for running scheduled tasks.
 * **Cobra:** Framework for creating powerful modern CLI applications.
 * **Prometheus:** Monitoring and alerting toolkit to track application performance and health.
-* **RESTful API:** Provides a RESTful API for interacting with the system, ensuring compatibility and easy integration
-  with other services.
+* **RESTful API:** Provides a RESTful API for interacting with the system.
 
 ## Installation
 
@@ -75,7 +74,7 @@ go mod tidy
 
 ### Generate Swagger API documentation
 
-To generate the Swagger API documentation, run:
+To generate, run:
 
 ```bash
 swag init
@@ -83,7 +82,7 @@ swag init
 
 ### Generate Wire Dependencies
 
-To generate the Wire dependencies, run:
+To generate, run:
 
 ```bash
 wire gen ./internal/pkg/wire
@@ -115,4 +114,4 @@ go run main.go --config config.yaml --port 8080 --host 127.0.0.1 --log-level deb
 
 ## License
 
-See [LICENSE](LICENSE).
+[Apache Lincense 2.0](LICENSE)
