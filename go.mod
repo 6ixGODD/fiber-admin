@@ -16,7 +16,7 @@ require (
 	github.com/mcuadros/go-defaults v1.2.0
 	github.com/prometheus/client_golang v1.19.0
 	github.com/qiniu/qmgo v1.1.8
-	github.com/redis/go-redis/v9 v9.5.1
+	github.com/redis/go-redis/v9 v9.5.5
 	github.com/robfig/cron/v3 v3.0.0
 	github.com/spf13/cobra v1.8.0
 	github.com/spf13/viper v1.18.2
